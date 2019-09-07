@@ -10,13 +10,7 @@ import (
 func TestBloomFilter(t *testing.T) {
 	bf := NewBloomFilter(1024, 3)
 
-	paragraph := `Alabama Alaska Arizona Arkansas California Colorado Connecticut
-    Delaware Florida Georgia Hawaii Idaho Illinois Indiana Iowa Kansas
-    Kentucky Louisiana Maine Maryland Massachusetts Michigan Minnesota
-    Mississippi Missouri Montana Nebraska Nevada NewHampshire NewJersey
-    NewMexico NewYork NorthCarolina NorthDakota Ohio Oklahoma Oregon
-    Pennsylvania RhodeIsland SouthCarolina SouthDakota Tennessee Texas Utah
-    Vermont Virginia Washington WestVirginia Wisconsin Wyoming`
+	paragraph := `A Bloom filter is a space-efficient probabilistic data structure, conceived by Burton Howard Bloom in 1970, that is used to test whether an element is a member of a set. False positive matches are possible, but false negatives are not – in other words, a query returns either "possibly in set" or "definitely not in set". Elements can be added to the set, but not removed (though this can be addressed with a "counting" filter); the more elements that are added to the set, the larger the probability of false positives`
 	var words []string
 	for _, w := range strings.Split(paragraph, " ") {
 		w = strings.TrimSpace(w)
