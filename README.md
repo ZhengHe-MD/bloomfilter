@@ -1,5 +1,7 @@
 # Bloom Filter
 
+本文仅为个人调研总结，如有发现错误，请斧正。
+
 ## 简介
 
 Bloom Filter 由 Burton H. Bloom 在 1970 年的论文 [1] 中被首次提出，用于解决 membership 问题，即检测某数据 s 是已知集合 S 的成员。
