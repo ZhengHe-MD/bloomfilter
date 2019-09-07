@@ -21,7 +21,7 @@ func NewBloomFilter(s, k uint64) *BloomFilter {
 }
 
 func (m *BloomFilter) hashToIndex(key string, ki uint64) uint64 {
-	return (h1(key) + h2(key)*ki) % uint64(len(m.bits) * elemLen)
+	return (h1(key) + h2(key)*ki) % uint64(len(m.bits)*elemLen)
 }
 
 func (m *BloomFilter) AddKey(key string) {
@@ -42,7 +42,7 @@ func (m *BloomFilter) HasKey(key string) bool {
 }
 
 func (m *BloomFilter) FalsePositiveRate(total uint64) float64 {
-	exp := math.Pow(math.E, -float64(m.kHash) * float64(total) / float64(len(m.bits)) / float64(elemLen))
+	exp := math.Pow(math.E, -float64(m.kHash)*float64(total)/float64(len(m.bits))/float64(elemLen))
 	return math.Pow(1-exp, float64(m.kHash))
 }
 
@@ -57,7 +57,3 @@ func h2(key string) uint64 {
 	val, _ := strconv.ParseUint(hex.EncodeToString(hash[:8]), 16, 64)
 	return val
 }
-
-
-
-
