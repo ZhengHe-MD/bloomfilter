@@ -5,7 +5,7 @@ import (
 	"testing"
 )
 
-func TestNewBits(t *testing.T) {
+func TestNewBitSet(t *testing.T) {
 	cases := []struct {
 		size         uint64
 		expectedSize int
@@ -15,12 +15,12 @@ func TestNewBits(t *testing.T) {
 	}
 
 	for _, c := range cases {
-		bits := NewBits(c.size)
+		bits := NewBitSet(c.size)
 		assert.Equal(t, c.expectedSize, len(bits))
 	}
 }
 
-func TestBits_Set(t *testing.T) {
+func TestBitSet_Set(t *testing.T) {
 	cases := []struct {
 		idx          uint64
 		expectedBits []uint8
@@ -36,14 +36,14 @@ func TestBits_Set(t *testing.T) {
 	}
 
 	for _, c := range cases {
-		bits := NewBits(16)
+		bits := NewBitSet(16)
 		bits.Set(c.idx)
 		assert.Equal(t, []uint8(bits), c.expectedBits)
 	}
 }
 
-func TestBits_HasSet(t *testing.T) {
-	bits := NewBits(128)
+func TestBitSet_HasSet(t *testing.T) {
+	bits := NewBitSet(128)
 
 	testSet := map[uint64]struct{}{
 		0:   {},

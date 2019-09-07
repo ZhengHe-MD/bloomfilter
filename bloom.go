@@ -9,32 +9,32 @@ import (
 )
 
 type BloomFilter struct {
-	kHash int
-	bits  Bits
+	kHash  int
+	bitset BitSet
 }
 
 func NewBloomFilter(s, k uint64) *BloomFilter {
 	return &BloomFilter{
-		kHash: int(k),
-		bits:  NewBits(s),
+		kHash:  int(k),
+		bitset: NewBitSet(s),
 	}
 }
 
 func (m *BloomFilter) hashToIndex(key string, ki uint64) uint64 {
-	return (h1(key) + h2(key)*ki) % uint64(len(m.bits)*elemLen)
+	return (h1(key) + h2(key)*ki) % uint64(len(m.bitset)*elemLen)
 }
 
 func (m *BloomFilter) AddKey(key string) {
 	for i := 0; i < m.kHash; i++ {
 		hi := m.hashToIndex(key, uint64(i))
-		m.bits.Set(hi)
+		m.bitset.Set(hi)
 	}
 }
 
 func (m *BloomFilter) HasKey(key string) bool {
 	for i := 0; i < m.kHash; i++ {
 		hi := m.hashToIndex(key, uint64(i))
-		if !m.bits.HasSet(hi) {
+		if !m.bitset.HasSet(hi) {
 			return false
 		}
 	}
@@ -42,7 +42,7 @@ func (m *BloomFilter) HasKey(key string) bool {
 }
 
 func (m *BloomFilter) FalsePositiveRate(total uint64) float64 {
-	exp := math.Pow(math.E, -float64(m.kHash)*float64(total)/float64(len(m.bits))/float64(elemLen))
+	exp := math.Pow(math.E, -float64(m.kHash)*float64(total)/float64(len(m.bitset))/float64(elemLen))
 	return math.Pow(1-exp, float64(m.kHash))
 }
 
